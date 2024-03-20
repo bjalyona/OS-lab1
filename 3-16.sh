@@ -1,15 +1,29 @@
 #!/bin/bash
 
-# Запрос префикса логина пользователя
-read -p "Enter the prefix: " prefix
-# Запрос количества создаваемых пользователей
-read -p "Enter the count of members: " count
+# Функция для вывода сообщения о правильном использовании скрипта
+help() {
+  echo "You need to enter the number of users as the first parameter"
+  echo "Example: ./3-16.sh"
+  echo "After that the program will ask you for the user login prefix, enter it"
+}
+
+# Проверка на наличие флага -h (помощь)
+if [ "$1" == "-h" ]; then
+  help
+  exit 0
+fi
 
 # Проверка, что введенное количество пользователей является числом
-if ! [[ $count =~ ^[0-9]+$ ]]; then
+if ! [[ $1 =~ ^[0-9]+$ ]]; then
   echo "Error: The number of users must be a valid number"
+  help
   exit 1
 fi
+
+# Сохранение первого аргумента в переменную count
+count=$1
+# Запрос префикса логина пользователя
+read -p "Enter the prefix: " prefix
 
 > users.csv #Создаем текстовый файл users.csv
 
